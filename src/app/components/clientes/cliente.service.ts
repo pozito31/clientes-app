@@ -27,7 +27,7 @@ export class ClienteService {
     return this.http.post<Cliente>(this.urlEndPoint, cliente, { headers: this.httpHeaders }).pipe(
       catchError(e => {
         console.error(e.error.mensaje);
-        Swal.fire('Error al crear al cliente', 'error');
+        Swal.fire(e.error.mesaje, e.error.error, 'error');
         return throwError(e);
       })
     );
@@ -48,7 +48,7 @@ export class ClienteService {
     return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, { headers: this.httpHeaders }).pipe(
       catchError(e => {
         console.error(e.error.mensaje);
-        Swal.fire('Error al editar al cliente', 'error');
+        Swal.fire('e.error.mesaje, e.error.error', 'error');
         return throwError(e);
       })
     );
@@ -58,7 +58,7 @@ export class ClienteService {
     return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
       catchError(e => {
         console.error(e.error.mensaje);
-        Swal.fire('Error al eliminar al cliente', 'error');
+        Swal.fire(e.error.mesaje, e.error.error, 'error');
         return throwError(e);
       })
     )
