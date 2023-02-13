@@ -13,6 +13,7 @@ import { FormComponent } from './components/clientes/form.component';
 import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 registerLocaleData(localeES, 'es');
 
 @NgModule({
@@ -22,7 +23,8 @@ registerLocaleData(localeES, 'es');
     FooterComponent,
     DirectivaComponent,
     ClientesComponent,
-    FormComponent
+    FormComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
