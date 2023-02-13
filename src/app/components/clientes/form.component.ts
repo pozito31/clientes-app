@@ -34,32 +34,34 @@ export class FormComponent implements OnInit {
     })
   }
 
-  public create(): void {
-    this.clienteService.create(this.cliente).subscribe(
-      response => {
-        this.router.navigate(['/clientes'])
-        Swal.fire('Nuevo cliente', `Cliente ${this.cliente.nombre} creado con exito!`, 'success')
-      },
-      err => {
-        this.errors = err.error.errors as string[];
-        console.error('Codigo del error desde el backend: ' + err.status);
-        console.error(err.error.errors);
-      }
-    )
+  create(): void {
+    this.clienteService.create(this.cliente)
+      .subscribe(
+        cliente => {
+          this.router.navigate(['/clientes']);
+          Swal.fire('Nuevo cliente', `El cliente ${cliente.nombre} ha sido creado con éxito`, 'success');
+        },
+        err => {
+          this.errors = err.error.errors as string[];
+          console.error('Código del error desde el backend: ' + err.status);
+          console.error(err.error.errors);
+        }
+      );
   }
 
-  update():void{
+  update(): void {
     this.clienteService.update(this.cliente)
-    .subscribe( cliente => {
-      this.router.navigate(['/clientes'])
-        Swal.fire('Cliente Actualizado', `Cliente ${this.cliente.nombre} actualizado con éxito!`, 'success')
-      },
-      err => {
-        this.errors = err.error.errors as string[];
-        console.error('Codigo del error desde el backend: ' + err.status);
-        console.error(err.error.errors);
-      }
-    )
+      .subscribe(
+        json => {
+          this.router.navigate(['/clientes']);
+          Swal.fire('Cliente Actualizado', `${json.mensaje}: ${json.cliente.nombre}`, 'success');
+        },
+        err => {
+          this.errors = err.error.errors as string[];
+          console.error('Código del error desde el backend: ' + err.status);
+          console.error(err.error.errors);
+        }
+      )
   }
 
 }

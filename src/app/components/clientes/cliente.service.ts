@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Cliente } from './cliente';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -20,11 +20,37 @@ export class ClienteService {
   ) { }
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.urlEndPoint);
+    return this.http.get(this.urlEndPoint).pipe(
+      tap(response => {
+        let clientes = response as Cliente[];
+        console.log('ClienteService: tap 1');
+        clientes.forEach(cliente => {
+          console.log(cliente.nombre);
+        });
+      }),
+      map(response => {
+        let clientes = response as Cliente[];
+        return clientes.map(cliente => {
+          cliente.nombre = cliente.nombre.toUpperCase();
+          //let datePipe = new DatePipe('es');
+          //cliente.createAt = datePipe.transform(cliente.createAt, 'EEEE dd, MMMM yyyy');
+          //cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'es');
+          return cliente;
+        });
+      }
+      ),
+      tap(response => {
+        console.log('ClienteService: tap 2');
+        response.forEach(cliente => {
+          console.log(cliente.nombre);
+        });
+      })
+    );
   }
 
-  create(cliente: Cliente): Observable<Cliente>{
-    return this.http.post<Cliente>(this.urlEndPoint, cliente, { headers: this.httpHeaders }).pipe(
+  create(cliente: Cliente): Observable<Cliente> {
+    return this.http.post(this.urlEndPoint, cliente, { headers: this.httpHeaders }).pipe(
+      map((response: any) => response.cliente as Cliente),
       catchError(e => {
 
         if (e.status == 400) {
@@ -32,7 +58,7 @@ export class ClienteService {
         }
 
         console.error(e.error.mensaje);
-        Swal.fire(e.error.mesaje, e.error.error, 'error');
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
     );
@@ -49,8 +75,8 @@ export class ClienteService {
     );
   }
 
-  update(cliente: Cliente): Observable<Cliente>{
-    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, { headers: this.httpHeaders }).pipe(
+  update(cliente: Cliente): Observable<any> {
+    return this.http.put<any>(`${this.urlEndPoint}/${cliente.id}`, cliente, { headers: this.httpHeaders }).pipe(
       catchError(e => {
 
         if (e.status == 400) {
@@ -58,7 +84,7 @@ export class ClienteService {
         }
 
         console.error(e.error.mensaje);
-        Swal.fire('e.error.mesaje, e.error.error', 'error');
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
     );
