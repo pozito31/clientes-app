@@ -39,7 +39,7 @@ export class FormComponent implements OnInit {
       .subscribe(
         cliente => {
           this.router.navigate(['/clientes']);
-          Swal.fire('Nuevo cliente', `El cliente ${cliente.nombre} ha sido creado con éxito`, 'success');
+          Swal.fire('Nuevo cliente', `El cliente ${this.cliente.nombre} ha sido creado con éxito`, 'success');
         },
         err => {
           this.errors = err.error.errors as string[];
