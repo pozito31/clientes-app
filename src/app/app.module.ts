@@ -15,6 +15,7 @@ import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetalleComponent } from './components/clientes/detalle/detalle.component';
 registerLocaleData(localeES, 'es');
 
 @NgModule({
@@ -25,7 +26,8 @@ registerLocaleData(localeES, 'es');
     DirectivaComponent,
     ClientesComponent,
     FormComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    DetalleComponent
   ],
   imports: [
     BrowserModule,
