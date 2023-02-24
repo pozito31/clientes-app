@@ -10,12 +10,17 @@ import { DirectivaComponent } from './components/directiva/directiva.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { ClienteService } from './components/clientes/cliente.service';
 import { FormComponent } from './components/clientes/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetalleComponent } from './components/clientes/detalle/detalle.component';
+import { DetalleFacturaComponent } from './components/facturas/detalle-factura.component';
+import { FacturasComponent } from './components/facturas/facturas/facturas.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 registerLocaleData(localeES, 'es');
 
 @NgModule({
@@ -27,14 +32,20 @@ registerLocaleData(localeES, 'es');
     ClientesComponent,
     FormComponent,
     PaginatorComponent,
-    DetalleComponent
+    DetalleComponent,
+    DetalleFacturaComponent,
+    FacturasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule
   ],
   providers: [
     ClienteService,
